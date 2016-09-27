@@ -1,0 +1,57 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+         {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'books/css/styles.css' %}" media="screen" title="no title" charset="utf-8">
+     	<!-- Latest compiled and minified CSS -->
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    	<!-- Optional theme -->
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    	<!-- Latest compiled and minified JavaScript -->
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <title>Welcome page</title> 
+
+    </head>
+    <body>
+           
+     <div class="container">
+        <div class="header">
+            <h3>Welcome {{request.session.first_name}}</h3>
+
+  
+        </div>
+        <div class="headerright">
+            <a href="{% url 'books:addbook' %}">Add book and review</a>
+            <a href="{% url 'login:logout' %}">Logout</a>
+        </div>
+      
+      
+        <div class="recent">
+            <h3>Recent Book Reviews:</h3>
+
+            <br><br>
+            {% for review in reviews %}
+              <p> Title: <a href="{% url 'books:viewbook' id=review.book.id %}">{{review.book.name}}</a> </P>
+            
+            
+              <p> <a href="{% url 'books:showuser' id=review.user.id %}">{{review.user.first_name}}</a> Posted:</p>
+
+              <p> Rating:
+               {{review.rating}}</p>
+              <p> Review: {{review.description}}</p>
+              <p> At: {{review.created_at}}</p>
+              <hr>
+              {% endfor %}
+         
+         
+        </div>
+        <div class ="other">
+            <h3>Other books with reviews:</h3>
+        </div>
+
+
+	 </div>
+    </body>
+</html>

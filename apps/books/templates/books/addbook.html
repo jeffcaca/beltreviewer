@@ -1,0 +1,62 @@
+<html>
+    <head>
+        <meta charset="UTF-8">
+         {% load staticfiles %}
+        <link rel="stylesheet" href="{% static 'books/css/styles.css' %}" media="screen" title="no title" charset="utf-8">
+     	<!-- Latest compiled and minified CSS -->
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    	<!-- Optional theme -->
+    	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    	<!-- Latest compiled and minified JavaScript -->
+    	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    <title>Welcome page</title> 
+
+    </head>
+    <body>
+           
+     <div class="container">
+     <h3>Add a new book title and a review:</h3>
+     <form action="{% url 'books:addbookreview' %}" method="POST">
+         {% csrf_token %}
+        Book Title:<input class ="form-control" type="text" name="booktitle">
+        <br>
+        Choose author from a list:<select class="form-control" name="selectauthor">
+        {% for author in authors %}
+            <option>{{author.name}}</option>
+        {% endfor %}
+
+        </select>
+        <br>
+        Or add new author: <input type="text" class="form-control" name="author">
+        <br>
+        Review: <textarea class ="form-control" rows="3" cols="3" name="review"></textarea>
+        <br>
+        Rating: 
+        <select class="form-control" name="rating">
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+            <option>4</option>
+            <option>5</option>
+        </select>
+        <br>
+        <input type="submit" class="btn btn-sm btn-info" value="Add book and review">
+     </form>
+     
+     <br>
+
+{% if messages %}
+       {% for message in messages %}
+           <p>{{ message }}</p>
+       {% endfor %}
+    {% endif %}
+<br><br>
+      <a href="{% url 'books:index' %}">Return Home</a>
+       <br>
+       <a href="{% url 'login:logout' %}">Logout</a>
+
+	 </div>
+    </body>
+</html>
